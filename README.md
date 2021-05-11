@@ -1,4 +1,4 @@
-# vuechat
+# vue-covid19-turkey
 
 ## Project setup
 ```
