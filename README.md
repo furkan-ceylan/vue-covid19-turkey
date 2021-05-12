@@ -1,4 +1,6 @@
-# covid19-turkey
+
+
+# vue-covid19-turkey
 
 ## Project setup
 ```
