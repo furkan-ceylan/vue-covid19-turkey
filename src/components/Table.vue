@@ -1,19 +1,11 @@
 <template>
   <div class="row">
     <div class="col-sm-12 col-md-12 col-xl-12">
-      <div class="mb-3 card">
-        <div class="card-header-tab card-header">
-          <div>All Cases</div>
-          <div class="btn-actions-pane-right">
-            <div role="group" class="btn-group-sm btn-group">
-              <button class="btn-shadow btn btn-dark">Refresh</button>
-            </div>
-          </div>
-        </div>
+      <div class="main-card mb-3 card">
         <div class="card-body">
           <table
             style="width: 100%;"
-            id="example2"
+            id="example"
             class="table table-hover table-striped table-bordered"
           >
             <thead>
@@ -63,16 +55,15 @@ export default {
   },
   async created() {
     const data = await this.fetchAllData();
-    const date = moment().format("DD/MM/YYYY");
+    const date = moment().format("YYY/MM/DD");
+    
 
-    console.log(data[date].cases);
   },
-  setup () {
+  setup() {
     return {
-      numberWithCommas (x) {
-        return x.toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      }
+      numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      },
     };
   },
 };
