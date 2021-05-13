@@ -3,14 +3,15 @@
     <div class="app-main__inner">
       <div class="app-page-title">
         <div class="page-title-wrapper">
-          <div class="page-title-heading bold">
-            <div>
+
+            <div  class="page-title-heading">
               COVID19 TURKEY DAILY CASES
-              <div class="page-title-heading">
+
+            </div>
+                          <div class="page-title-heading2">
                 {{title}}
               </div>
-            </div>
-          </div>
+
         </div>
       </div>
       <div class="tabs-animation">
@@ -23,7 +24,7 @@
                 <div class="icon-wrapper-bg bg-white opacity-1"></div>
                 <i class="fas fa-vials text-white"></i>
               </div>
-              <div class="widget-numbers">{{ retTests  | numberFormat}}</div>
+              <div class="widget-numbers">{{ retTests }}</div>
               <div
                 class="widget-subheading fsize-2 pt-2 opacity-10 font-weight-bold"
               >
@@ -39,7 +40,7 @@
                 <div class="icon-wrapper-bg bg-white opacity-2"></div>
                 <i class="fas fa-virus text-white"></i>
               </div>
-              <div class="widget-numbers">{{ retCases | numberFormat}}</div>
+              <div class="widget-numbers">{{ retCases }}</div>
               <div
                 class="widget-subheading fsize-2 pt-2 opacity-10 font-weight-bold"
               >
@@ -55,7 +56,7 @@
                 <div class="icon-wrapper-bg bg-white opacity-2"></div>
                 <i class="fas fa-skull-crossbones text-white"></i>
               </div>
-              <div class="widget-numbers">{{ retDeaths | numberFormat}}</div>
+              <div class="widget-numbers">{{ retDeaths }}</div>
               <div
                 class="widget-subheading fsize-2 pt-2 opacity-10 font-weight-bold"
               >
@@ -71,7 +72,7 @@
                 <div class="icon-wrapper-bg bg-focus opacity-5"></div>
                 <i class="fas fa-plus-square text-white"></i>
               </div>
-              <div class="widget-numbers">{{ retRecovered | numberFormat}}</div>
+              <div class="widget-numbers">{{ retRecovered }}</div>
               <div
                 class="widget-subheading fsize-2 pt-2 opacity-10 font-weight-bold"
               >
@@ -98,12 +99,12 @@ export default {
   },
   data() {
     return {
-      retCases: "Loading...",
-      retTests: "Loading...",
-      retDeaths: "Loading...",
-      retRecovered: "Loading...",
+      retCases: "-",
+      retTests: "-",
+      retDeaths: "-",
+      retRecovered: "-",
       dataDate: [],
-      title: "Today's datas is waiting...",
+      title: "Waiting for today's data...",
     };
   },
   setup () {

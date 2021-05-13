@@ -11230,6 +11230,7 @@ button,
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .app-page-title .page-title-heading,
 .app-page-title .page-title-subheading {
@@ -11242,6 +11243,15 @@ button,
   display: flex;
   align-content: center;
   align-items: center;
+}
+.app-page-title .page-title-heading2 {
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  margin-right: 0;
+  margin-left: auto;
 }
 .app-page-title .page-title-subheading {
   padding: 3px 0 0;
