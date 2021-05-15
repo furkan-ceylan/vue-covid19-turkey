@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+    <!-- <LineChart :chartdata="dataTable" :options="chartOptions" label="Cases"/> -->
     <div class="col-sm-12 col-md-12 col-xl-12">
       <div class="main-card mb-3 card">
         <div class="card-body">
@@ -20,7 +21,7 @@
             <tbody>
               <tr v-for="data in dataTable" :key="data.id">
                 <td>{{ data.date }}</td>
-                <td>{{ data.tests }}</td>
+                <td>{{ numberWithCommas(data.tests) }}</td>
                 <td>{{ data.cases }}</td>
                 <td>{{ data.deaths }}</td>
                 <td>{{ data.recovered }}</td>
@@ -35,12 +36,21 @@
 
 <script>
 import moment from "moment";
+import LineChart from "@/components/LineChart.vue";
 
 export default {
   name: "Table",
+  components: {
+    LineChart,
+  },
   data() {
     return {
-      dataTable: [],
+      dataTable: ["date", "tests", "cases", "deaths", "recovered"],
+
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
     };
   },
 
@@ -52,19 +62,14 @@ export default {
       this.dataTable = await res.json();
       return this.dataTable;
     },
+    numberWithCommas(x) {
+      return x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
   },
   async created() {
     const data = await this.fetchAllData();
-    const date = moment().format("YYY/MM/DD");
-    
-
-  },
-  setup() {
-    return {
-      numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      },
-    };
+    const date = moment().format("YYYY/MM/DD") - 1;
+    // console.log(data)
   },
 };
 </script>
