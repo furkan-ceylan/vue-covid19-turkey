@@ -3,15 +3,12 @@
     <div class="app-main__inner">
       <div class="app-page-title">
         <div class="page-title-wrapper">
-
-            <div  class="page-title-heading">
-              COVID19 TURKEY DAILY CASES
-
-            </div>
-                          <div class="page-title-heading2">
-                {{title}}
-              </div>
-
+          <div class="page-title-heading">
+            COVID19 TURKEY DAILY CASES
+          </div>
+          <div class="page-title-heading2">
+            {{ title }}
+          </div>
         </div>
       </div>
       <div class="tabs-animation">
@@ -24,7 +21,7 @@
                 <div class="icon-wrapper-bg bg-white opacity-1"></div>
                 <i class="fas fa-vials text-white"></i>
               </div>
-              <div class="widget-numbers">{{ retTests }}</div>
+              <div class="widget-numbers">{{ numberWithCommas(retTests) }}</div>
               <div
                 class="widget-subheading fsize-2 pt-2 opacity-10 font-weight-bold"
               >
@@ -40,7 +37,7 @@
                 <div class="icon-wrapper-bg bg-white opacity-2"></div>
                 <i class="fas fa-virus text-white"></i>
               </div>
-              <div class="widget-numbers">{{ retCases }}</div>
+              <div class="widget-numbers">{{ numberWithCommas(retCases) }}</div>
               <div
                 class="widget-subheading fsize-2 pt-2 opacity-10 font-weight-bold"
               >
@@ -56,7 +53,9 @@
                 <div class="icon-wrapper-bg bg-white opacity-2"></div>
                 <i class="fas fa-skull-crossbones text-white"></i>
               </div>
-              <div class="widget-numbers">{{ retDeaths }}</div>
+              <div class="widget-numbers">
+                {{ numberWithCommas(retDeaths) }}
+              </div>
               <div
                 class="widget-subheading fsize-2 pt-2 opacity-10 font-weight-bold"
               >
@@ -69,10 +68,12 @@
               class="card mb-3 bg-success widget-chart text-white card-border"
             >
               <div class="icon-wrapper rounded">
-                <div class="icon-wrapper-bg bg-focus opacity-5"></div>
+                <div class="icon-wrapper-bg bg-white opacity-5"></div>
                 <i class="fas fa-plus-square text-white"></i>
               </div>
-              <div class="widget-numbers">{{ retRecovered }}</div>
+              <div class="widget-numbers">
+                {{ numberWithCommas(retRecovered) }}
+              </div>
               <div
                 class="widget-subheading fsize-2 pt-2 opacity-10 font-weight-bold"
               >
@@ -107,36 +108,27 @@ export default {
       title: "Waiting for today's data...",
     };
   },
-  setup () {
-    return {
-      numberWithCommas (x) {
-        return x.toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      }
-    };
-  },
- methods: {
+  methods: {
     async fetchDailyData() {
       const res = await fetch(
-        "https://raw.githubusercontent.com/ozanerturk/covid19-turkey-api/master/dataset/timeline.json"
+        "https://api.apify.com/v2/key-value-stores/28ljlt47S5XEd1qIi/records/LATEST?disableRedirect=true"
       );
-      this.dataDate = await res.json();
-      return this.dataDate
-    }
+      const data = await res.json();
+      return data;
+    },
+    numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
   },
   async created() {
     const data = await this.fetchDailyData();
-    const date = moment().format("DD/MM/YYYY");
-    
-    const datawithDate = data[date];
-    console.log(data);
+    const date = moment(data.lastUpdatedAtSource).format("DD/MM/YYYY");
 
-    this.retCases = datawithDate.cases;
-    this.retTests = datawithDate.tests;
-    this.retDeaths = datawithDate.deaths;
-    this.retRecovered = datawithDate.recovered;
-    this.title = datawithDate.date;
-    
+    this.retCases = data.dailyInfected;
+    this.retTests = data.dailyTested;
+    this.retDeaths = data.dailyDeceased;
+    this.retRecovered = data.dailyRecovered;
+    this.title = date;
   },
 };
 </script>
